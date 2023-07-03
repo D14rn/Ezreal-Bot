@@ -14,12 +14,14 @@ This section lists the features of the bot and their implementation status.
 | About Command       | No          |
 | Bot Stats Command   | No          |
 | Welcome New User    | No          |
+| Register League acc | No          |
 
 #### Descriptions
 * Help Command: Lists all of the available commands and their usage.
 * About Command: Short description about the bot.
 * Bot Stats Command: Shows stats related to the bot.
 * Welcome New User: Displays a custom welcome message every time a new user joins the server.
+* Register League acc: Lets a server member link a league account with their discord id.
 
 ### Ranked
 *Ranked gamemodes (primarily soloQ) related features*
@@ -30,11 +32,13 @@ This section lists the features of the bot and their implementation status.
 | Live Game Search    | No          |
 | Profile Search      | No          |
 | Rank Tracking       | No          |
+| Live Game Betting   | No          |
 
 #### Descriptions
 * Live Game Search: Shows details of a live game, such as the players and their champions.
 * Profile Search: Shows the details of a player, such as his rank and winrate in different gamemodes, his XP level and his challenge rank.
 * Rank Tracking: Let users add players to a tracking list, this tracking list will periodically calculate the LP gains/losses, ranked games played, and more of each player inside of it (ex: every day or week).
+* Live Game Betting: Predict the outcome of a live game by betting virtual server currency.
 
 ### Challenges
 *Challenges related features*
