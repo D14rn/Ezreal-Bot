@@ -20,3 +20,21 @@ class Ezreal(commands.Bot):
     
     async def on_member_join(self, member):
         print(f"{member.name}")
+
+if __name__ == "__main__":
+
+    import os
+
+    import discord
+    import dotenv
+
+
+    dotenv.load_dotenv("../.env")
+
+    token = os.getenv("DISCORD_TOKEN")
+    dev_guild_id = discord.Object(int(os.getenv("DEV_GUILD_ID")))
+
+    intents = discord.Intents(messages=True, guilds=True, members=True)
+    client = Ezreal(intents=intents, guild_id=dev_guild_id)
+
+    client.run(token)
