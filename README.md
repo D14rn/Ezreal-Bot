@@ -33,6 +33,7 @@ This section lists the features of the bot and their implementation status.
 | Profile Search      | No          |
 | Rank Tracking       | No          |
 | Live Game Betting   | No          |
+| Multi-search        | No          |
 
 #### Descriptions
 * Live Game Search: Shows details of a live game, such as the players and their champions.
