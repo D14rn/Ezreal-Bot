@@ -25,9 +25,9 @@ async def setup(bot):
     await bot.add_cog(Ranked(bot))
 
 
-class ProfileEmbed(discord.Embed):
-    def __init__(self, summoner_name, region):
-        self.summoner_data = SummonerV4.
+#class ProfileEmbed(discord.Embed):
+#    def __init__(self, summoner_name, region):
+#        self.summoner_data = SummonerV4._b
 
 
 
