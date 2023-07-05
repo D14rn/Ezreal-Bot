@@ -40,6 +40,7 @@ This section lists the features of the bot and their implementation status.
 * Profile Search: Shows the details of a player, such as his rank and winrate in different gamemodes, his XP level and his challenge rank.
 * Rank Tracking: Let users add players to a tracking list, this tracking list will periodically calculate the LP gains/losses, ranked games played, and more of each player inside of it (ex: every day or week).
 * Live Game Betting: Predict the outcome of a live game by betting virtual server currency.
+* Multi-search: Shows multiple user profiles when provided with a correctly formatted champion selection message
 
 ### Challenges
 *Challenges related features*
