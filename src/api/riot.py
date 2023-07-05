@@ -29,7 +29,7 @@ class RiotRegion(Enum):
     OCE = PH = SG = TH = VN = "sea"
 
 class RiotAPI(ABC):
-    _base_url = "https://#.api.riotgames.com/lol/"
+    _base_url = "https://#.api.riotgames.com"
     _prefix = ""
     _api_key = ""
     _endpoints = {}
