@@ -7,6 +7,17 @@ from discord import app_commands
 from utils.images import welcome_image
 
 
+commands_dict = {
+    "welcome": {
+        "description": {
+            "en": "Sends welcome image to server (test)",
+        },
+        "help": {
+        }
+    }
+}
+
+
 async def setup(bot):
     await bot.add_cog(General(bot))
 
@@ -15,7 +26,7 @@ class General(commands.Cog):
     def __init__(self, bot) -> None:
         self._bot = bot
     
-    @app_commands.command(description="Sends welcome image to server (test)")
+    @app_commands.command(description=commands_dict["welcome"]["description"]["en"])
     async def welcome(self, interaction: discord.Interaction):
         await interaction.response.defer()
         x = await welcome_image(interaction.user)
