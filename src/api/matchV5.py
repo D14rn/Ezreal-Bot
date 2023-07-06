@@ -1,4 +1,4 @@
-from riot import RiotAPI
+from riot import RiotAPI, RiotRegion
 
 
 class MatchV5(RiotAPI):
@@ -8,6 +8,7 @@ class MatchV5(RiotAPI):
         "by_match_id": "#",
         "by_match_id_timeline": "#/timeline"
     }
+    _region_type = RiotRegion
 
     @classmethod
     def by_puuid(cls, region, puuid):
