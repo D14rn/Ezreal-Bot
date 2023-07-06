@@ -29,6 +29,7 @@ class RiotRegion(Enum):
     OCE = PH = SG = TH = VN = "sea"
 
 class RiotAPI(ABC):
+    # todo add requests Session (for rate limiting)
     _base_url = "https://#.api.riotgames.com"
     _prefix = ""
     _api_key = ""
