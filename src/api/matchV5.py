@@ -4,10 +4,19 @@ from riot import RiotAPI
 class MatchV5(RiotAPI):
     _prefix = "/lol/match/v5/matches/"
     _endpoints = {
-        "by_puuid": "by-puuid/#/ids"
+        "by_puuid": "by-puuid/#/ids",
+        "by_match_id": "#",
+        "by_match_id_timeline": "#/timeline"
     }
 
     @classmethod
     def by_puuid(cls, region, puuid):
-        url = str(cls.region_url(region) + cls._endpoints["by_puuid"]).replace("#", puuid)
-        return cls._get_data(url)
+        return cls._get_data(cls._get_url(region, "by_puuid", puuid))
+    
+    @classmethod
+    def by_match_id(cls, region, match_id):
+        return cls._get_data(cls._get_url(region, "by_match_id", match_id))
+    
+    @classmethod
+    def by_match_id_timeline(cls, region, match_id):
+        return cls._get_data(cls._get_url(region, "by_match_id_timeline", match_id))
