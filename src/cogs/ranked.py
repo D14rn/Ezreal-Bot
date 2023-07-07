@@ -4,8 +4,7 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 
-from api.riot import RiotPlatform
-from api.summonerV4 import SummonerV4
+from api import RiotPlatform, SummonerV4
 
 
 commands_dict = {
@@ -41,4 +40,5 @@ class Ranked(commands.Cog):
         region="Region of the summoner"
     )
     async def profile(self, interaction: discord.Interaction, member: Optional[discord.Member], name: Optional[str], region: Optional[RiotPlatform]=RiotPlatform.EUW.name):
-        raise NotImplementedError
+        summoner_data = SummonerV4.by_name(region, name)
+        await interaction.response.send_message(f"name: {summoner_data['name']}\nlevel: {summoner_data['summonerLevel']}")

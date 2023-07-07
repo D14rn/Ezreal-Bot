@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from api import RiotAPI
 
 
 class Ezreal(commands.Bot):
@@ -37,6 +38,9 @@ if __name__ == "__main__":
 
     token = os.getenv("DISCORD_TOKEN")
     dev_guild_id = discord.Object(int(os.getenv("DEV_GUILD_ID")))
+    riot_api_key = os.getenv("RIOT_API_KEY_FUCK")
+    
+    RiotAPI.initialize_key(riot_api_key)
 
     intents = discord.Intents(messages=True, guilds=True, members=True)
     client = Ezreal(intents=intents, guild_id=dev_guild_id)
