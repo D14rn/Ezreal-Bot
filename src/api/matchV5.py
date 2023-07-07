@@ -1,4 +1,4 @@
-from riot import RiotAPI, RiotRegion
+from .riot import RiotAPI, RiotRegion
 
 
 class MatchV5(RiotAPI):
