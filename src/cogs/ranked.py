@@ -4,7 +4,7 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 
-from api import RiotPlatform, SummonerV4
+from api import RiotPlatform, SummonerV4, LeagueV4, RankedQueue
 
 
 commands_dict = {
@@ -24,11 +24,31 @@ async def setup(bot):
     await bot.add_cog(Ranked(bot))
 
 
-#class ProfileEmbed(discord.Embed):
-#    def __init__(self, summoner_name, region):
-#        self.summoner_data = SummonerV4._b
+class ProfileEmbedGenerator:
+    @staticmethod
+    def from_summoner_id(platform, name, summoner_id):
+        data = LeagueV4.by_summoner_id(platform, summoner_id)
+        unranked = True
+        if len(data) > 0:
+            for queue in data:
+                if queue["queueType"] == RankedQueue.RANKED_SOLO_5x5.name:
+                    unranked = False
+                    tier = queue["tier"]
+                    rank = queue["rank"]
+                    league_points = queue["leaguePoints"]
+                    wins = queue["wins"]
+                    losses = queue["losses"]
+        embed = discord.Embed(title=name)
+        if unranked:
+            embed.description = f"is currently unranked"
+        else:
+            embed.description = f"is currently {tier} {rank} {league_points} LP ({int(int(wins) / (int(losses) + int(wins)) * 100)}% WR)"
+        return embed
 
-
+    @classmethod
+    def from_name(cls, platform, name):
+        data = SummonerV4.by_name(platform, name)
+        return cls.from_summoner_id(platform, data["name"], data["id"])
 
 class Ranked(commands.Cog):
     def __init__(self, bot) -> None:
@@ -40,5 +60,5 @@ class Ranked(commands.Cog):
         region="Region of the summoner"
     )
     async def profile(self, interaction: discord.Interaction, member: Optional[discord.Member], name: Optional[str], region: Optional[RiotPlatform]=RiotPlatform.EUW.name):
-        summoner_data = SummonerV4.by_name(region, name)
-        await interaction.response.send_message(f"name: {summoner_data['name']}\nlevel: {summoner_data['summonerLevel']}")
+        embed = ProfileEmbedGenerator.from_name(region, name)
+        await interaction.response.send_message(embed=embed)
