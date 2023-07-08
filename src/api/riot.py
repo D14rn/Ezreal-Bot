@@ -32,13 +32,13 @@ class RiotAPI(ABC):
     # todo add requests Session (for rate limiting)
     _base_url = "https://#.api.riotgames.com"
     _prefix = ""
-    _api_key = ""
+    __api_key = ""
     _endpoints = {}
     _region_type = RiotPlatform # override this with RiotRegion if the API endpoint requires a region
 
     @classmethod 
     def initialize_key(cls, api_key: str):
-        cls._api_key = api_key
+        cls.__api_key = api_key
  
     @staticmethod
     def _replace_url(url: str, new: str):
@@ -52,12 +52,11 @@ class RiotAPI(ABC):
     
     @classmethod
     def _get_headers(cls):
-        return {"X-Riot-Token": cls._api_key}
+        return {"X-Riot-Token": cls.__api_key}
     
     @classmethod
     def _get_url(cls, region, endpoint, replace_by):
-        if region in cls._region_type.__members__:
-            return cls._replace_url(cls._base_url, cls._region_type[region].value) + cls._prefix + cls._replace_url(cls._endpoints[endpoint], replace_by)
+        return cls._replace_url(cls._base_url, region.value) + cls._prefix + cls._replace_url(cls._endpoints[endpoint], replace_by)
 
 class LeagueAssets:
     @staticmethod
