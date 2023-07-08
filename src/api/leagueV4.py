@@ -1,7 +1,7 @@
 from .riot import RiotAPI
 
 
-class MatchV5(RiotAPI):
+class LeagueV4(RiotAPI):
     _prefix = "/lol/league/v4/"
     _endpoints = {
         "by_summoner_id": "entries/by-summoner/#",
