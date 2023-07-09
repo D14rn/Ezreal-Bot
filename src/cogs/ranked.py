@@ -60,5 +60,5 @@ class Ranked(commands.Cog):
         region="Region of the summoner"
     )
     async def profile(self, interaction: discord.Interaction, member: Optional[discord.Member], name: Optional[str], region: Optional[RiotPlatform]=RiotPlatform.EUW):
-        embed = ProfileEmbedGenerator.from_name(region, name)
+        embed = ProfileEmbedGenerator.from_name(region, member.name if member else name)
         await interaction.response.send_message(embed=embed)
