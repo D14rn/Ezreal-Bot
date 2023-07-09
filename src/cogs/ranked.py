@@ -4,7 +4,7 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 
-from api import RiotPlatform, SummonerV4, LeagueV4, RankedQueue
+from api import RiotPlatform, SummonerV4, LeagueV4, RankedQueue, LeagueAssets
 
 
 commands_dict = {
@@ -26,29 +26,28 @@ async def setup(bot):
 
 class ProfileEmbedGenerator:
     @staticmethod
-    def from_summoner_id(platform, name, summoner_id):
+    def from_summoner_id(platform, name, summoner_id, icon_id):
         data = LeagueV4.by_summoner_id(platform, summoner_id)
-        unranked = True
-        if len(data) > 0:
-            for queue in data:
-                if queue["queueType"] == RankedQueue.RANKED_SOLO_5x5.name:
-                    unranked = False
-                    tier = queue["tier"]
-                    rank = queue["rank"]
-                    league_points = queue["leaguePoints"]
-                    wins = queue["wins"]
-                    losses = queue["losses"]
-        embed = discord.Embed(title=name)
-        if unranked:
+        embed = discord.Embed()
+        embed.set_author(name=name, url=f"https://op.gg/summoners/{platform}/{name}".replace(" ", "%20"), icon_url=LeagueAssets.icon_url(icon_id))
+        if len(data) == 0:
             embed.description = f"is currently unranked"
-        else:
-            embed.description = f"is currently {tier} {rank} {league_points} LP ({int(int(wins) / (int(losses) + int(wins)) * 100)}% WR)"
-        return embed
+        for index, queue in enumerate(data):
+            embed.insert_field_at(index=index*3,
+                                  name=RankedQueue[queue["queueType"]],
+                                  value=f"{queue['tier']} {queue['rank']} {queue['leaguePoints']}LP",
+                                  inline=True)
+            embed.insert_field_at(index=index*3+1,
+                                  name="Winrate",
+                                  value=f"{queue['wins']}W/{queue['losses']}L ({round(queue['wins'] / (queue['wins'] + queue['losses']) * 100, 2)}%)",
+                                  inline=True)
+            if index != len(data)-1:
+                embed.insert_field_at(index*3+2, name=" ", value=" ", inline=False)
 
     @classmethod
     def from_name(cls, platform, name):
         data = SummonerV4.by_name(platform, name)
-        return cls.from_summoner_id(platform, data["name"], data["id"])
+        return cls.from_summoner_id(platform, data["name"], data["id"], data["profileIconId"])
 
 class Ranked(commands.Cog):
     def __init__(self, bot) -> None:
