@@ -34,7 +34,7 @@ class ProfileEmbedGenerator:
             embed.description = f"is currently unranked"
         for index, queue in enumerate(data):
             embed.insert_field_at(index=index*3,
-                                  name=RankedQueue[queue["queueType"]],
+                                  name=RankedQueue[queue["queueType"]].value,
                                   value=f"{queue['tier']} {queue['rank']} {queue['leaguePoints']}LP",
                                   inline=True)
             embed.insert_field_at(index=index*3+1,
@@ -43,6 +43,7 @@ class ProfileEmbedGenerator:
                                   inline=True)
             if index != len(data)-1:
                 embed.insert_field_at(index*3+2, name=" ", value=" ", inline=False)
+        return embed
 
     @classmethod
     def from_name(cls, platform, name):
@@ -58,6 +59,6 @@ class Ranked(commands.Cog):
         name="Summoner name",
         region="Region of the summoner"
     )
-    async def profile(self, interaction: discord.Interaction, member: Optional[discord.Member], name: Optional[str], region: Optional[RiotPlatform]=RiotPlatform.EUW.name):
+    async def profile(self, interaction: discord.Interaction, member: Optional[discord.Member], name: Optional[str], region: Optional[RiotPlatform]=RiotPlatform.EUW):
         embed = ProfileEmbedGenerator.from_name(region, name)
         await interaction.response.send_message(embed=embed)
