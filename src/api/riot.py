@@ -15,6 +15,7 @@ class SummonerNotFoundError(Exception):
 class RankedQueue(Enum):
     RANKED_SOLO_5x5 = "Ranked Solo/Duo"
     RANKED_FLEX_SR = "Ranked Flex"
+    RANKED_TFT_DOUBLE_UP = "TFT Double Up"
 
 class RiotPlatform(Enum):
     EUW = "euw1"; EUNE = "eun1"; TR = "tr1"; RU = "ru"
